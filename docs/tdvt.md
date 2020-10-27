@@ -55,23 +55,52 @@ Multiple expected files are supported.
     - PC or VM running Windows or macOS.
     - Tableau Desktop installed
     - Python 3.7 (See: [Windows releases](https://www.python.org/downloads/windows/) / [Mac releases](https://www.python.org/downloads/mac-osx/))
+
+      Verfify that the right version is installed:
+
+      ```sh
+      py --version
+      ```
+      
     - Pip (by default comes by with the Python installation)
+    
       Be sure to enable the "install environmental variables" option.
+      
+      Upgrade `pip` to the latest version to avoid warnings later:
+      
+      ```sh
+      py -m pip install --upgrade pip
+      ```
+    
     - An ODBC or JDBC driver for your database.
     - The Calcs and Staples table loaded in your database.
+    
 1. Clone the [TDVT Python module](https://github.com/tableau/connector-plugin-sdk/tree/master/tdvt).
-You can create an archive package and install that, or install from the live directory if you want to modify TDVT. Run the following commands from the top level "tdvt" directory.
+You can create an archive package and install that, or install from the live directory if you want to modify TDVT.
+    - Change to the `tdvt` directory.
     - Create an archive package in the dist folder:
-`py -3 setup.py sdist --formats gztar`
+        ```sh
+        py -3 setup.py sdist --formats gztar
+        ```
     - Change directory to dist and install from the archived file:
-`py -3 -m pip install tdvt-1.1.59.zip`
-   __Note:__ Instead of A and B, you can install the live version:
-    `py -3 -m pip install -e .`
-    - Verify it is installed:
- `py -3 -m pip list`
+        ```sh
+        py -3 -m pip install tdvt-2.1.22.zip
+        ```
+        If you build from a (Git) Bash the file ending will be `.tar.gz` instead of `.zip`. Installation works the same anyway.
+        
+        __Note:__ Instead of A and B, you can install the live version:
+
+        ```sh
+        py -3 -m pip install -e .
+        ```
+   - Verify it is installed:
+        ```sh
+        py -3 -m pip list
+        ```
 
 1. Extract and then load the [TestV1 dataset](https://github.com/tableau/connector-plugin-sdk/tree/master/tests/datasets/TestV1) into your database.
-__Notes:__
+
+    __Notes:__
     - See [Postgres Example](https://github.com/tableau/connector-plugin-sdk/tree/master/tests/datasets/TestV1/postgres/README.md) for an example of loading data into a database
     - See the section below about troubleshooting Boolean values if your database doesn’t have a native Boolean type.
     - Make sure that empty values are treated as nulls. This may not be the default for your database.
@@ -133,7 +162,8 @@ __To test a new data source__
 Choose to generate the password file and choose the logical query config. This creates a mydb.ini file under /config and will modify your two TDS files to rename the connection and link them to the tds/mydb.password password file.
 
 1. Edit the generated tds/mydb.password file and enter the password for your connection.
-__Note:__ This can also be done manually. See [The Sample TDS Files](https://github.com/tableau/connector-plugin-sdk/tree/master/tdvt/samples/tds).
+
+    __Note:__ This can also be done manually. See [The Sample TDS Files](https://github.com/tableau/connector-plugin-sdk/tree/master/tdvt/samples/tds).
 
 1. Verify your new test suite by running:
 `tdvt list --ds mydb`.
